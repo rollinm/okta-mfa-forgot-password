@@ -166,6 +166,7 @@ def change_password():
             has_errors = "true"
             message = "Passwords do not match"
 
+
         response = make_response(
             render_template("change_password.html",
                 okta_config=config.okta,
@@ -173,6 +174,14 @@ def change_password():
                 is_completed=is_completed,
                 has_errors=has_errors,
                 ott=ott,orgUrls=app.orgUrls))
+
+
+    if is_completed:
+        response = make_response(
+            render_template("password_success.html",
+                okta_config=config.okta,
+                ott=ott,
+                orgUrls=app.orgUrls))
 
     return response
 
