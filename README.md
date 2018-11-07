@@ -85,4 +85,4 @@ For an idea how the Password Rester MFA flow works, please review the following 
 * mfa_verification_poll - Will make a request to check if the Okta Verify Push notification has completed and return the results.  This endpoint can be polled continuously.
 
 ## Example
-![Alt text](/example/giphy mfa password 480.gif?raw=true "MFA password example")
+![Alt text](/example/giphy-mfa-password-480.gif?raw=true "MFA password example")
