@@ -87,19 +87,11 @@ def index():
     print "index()"
     print "orgUrls:",app.orgUrls
     message = ""
-#    response = make_response(render_template("index.html", okta_config=config.okta, is_logged_in=is_logged_in(), message=message))
     response = make_response(render_template("index.html", okta_config=config.okta, is_logged_in=is_logged_in(), message=message, orgUrls=app.orgUrls))
 
     return response
 
-@app.route('/old')
-def indexOld():
-    """ handler for the root url path of the app """
-    print "indexold()"
-    message = ""
-    response = make_response(render_template("index_old.html", okta_config=config.okta, is_logged_in=is_logged_in(), message=message))
 
-    return response
 
 @app.route('/show_change_password', methods=["POST"])
 def show_change_password():
@@ -144,7 +136,7 @@ def change_password():
         if password == confirm_password:
             okta_util = OktaUtil(request.headers, config.okta)
             verify_ott_response = okta_util.verify_password_reset_token(ott)
-            print "verify_ott_response: {0}".format(json.dumps(verify_ott_response, indent=4, sort_keys=True))
+            #print "verify_ott_response: {0}".format(json.dumps(verify_ott_response, indent=4, sort_keys=True))
             user = {
                 "id": verify_ott_response["_embedded"]["user"]["id"],
                 "credentials": {
@@ -152,10 +144,10 @@ def change_password():
                 }
             }
             change_password_response = okta_util.update_user(user)
-            print "change_password_response: {0}".format(json.dumps(change_password_response, indent=4, sort_keys=True))
+            #print "change_password_response: {0}".format(json.dumps(change_password_response, indent=4, sort_keys=True))
 
             is_completed = True
-            """test for error on password update"""
+            ##test for error on password update"""
 
             if 'errorCode' in change_password_response:
                 print "update user error msg = ",change_password_response['errorCauses']
@@ -317,7 +309,7 @@ def push_mfa_code():
 
         for factor in enrolled_factors:
             # check factor type agains the enroled factor
-            print "factor: {0}".format(json.dumps(factor, indent=4, sort_keys=True))
+            #print "factor: {0}".format(json.dumps(factor, indent=4, sort_keys=True))
             if (factor["factorType"] == factor_type and factor["provider"] == "OKTA") or (factor["provider"] == factor_type):
                 okta_factor_id = factor["id"]
 
@@ -336,7 +328,7 @@ def push_mfa_code():
                     if "poll" in push_response["_links"]:
                         response["pollingUrl"] = push_response["_links"]["poll"]["href"]
 
-                print "factorResult: {0}".format(push_response["factorResult"])
+                #print "factorResult: {0}".format(push_response["factorResult"])
                 if push_response["factorResult"] == "SUCCESS":  # Means the user successfully passed the factor, so reset the pasword
                     password_reset_response = okta_util.reset_user_password(okta_user_id)
                     print "password_reset_response: {0}".format(json.dumps(password_reset_response, indent=4, sort_keys=True))
@@ -356,7 +348,7 @@ def push_mfa_code():
 def mfa_verification_poll():
     print "mfa_verification_poll()"
     request_json = request.get_json()
-    print "request_json: {0}".format(json.dumps(request_json, indent=4, sort_keys=True))
+    #print "request_json: {0}".format(json.dumps(request_json, indent=4, sort_keys=True))
     polling_url = request_json["pollingUrl"]
     user_name = request_json["userName"]
 

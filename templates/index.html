@@ -88,75 +88,100 @@ You are logged in <a href="{{okta_config.app_host}}/logout">Logout</a>
 
                   </div>
                   <br />
-                  <div id="modalContent">
+                  <div id="modalContent" >
                     <div id="smsModalContent">
-                      Enter verification code sent via SMS
-                      <div><input type="text" id="smsCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off" />
+
+                      <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
+                        <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
+                          <input name="passCode" type="text" id="smsCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off" />
+                        </span>
+
+                      </div>
+                      <div>
                         <input id="smsRequest" class="button button-primary button-wide email-button link-button" type="button" value="Re-send Code" onclick="requestCode('sms')" />
 
-                      </div>
-                      <div><input id="smsSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('smsCode').value)" />
+                      </div><br>
+
+                      <div>
+                        <input id="smsSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('smsCode').value)" />
 
                       </div>
 
                     </div>
-                    <div id="googleAuthModalContent">
-
-                      <div><input type="text" id="googleAuthCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off" />
-
-                      </div>
-                      <div><input id="googleAuthSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('googleAuthCode').value)" />
-
-                      </div>
-
-                    </div>
-                    <div id="oktaVerifyModalContent">
-                      <div><input type="text" id="oktaVerifyCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off" />
-
-                      </div>
-                      <div><input id="OktaVerifySubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('oktaVerifyCode').value)" />
-
-                      </div>
-
-                    </div>
-                    <div id="oktaVerifyPushModalContent">
-                      <div><input id="oktaVerifyPushSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Push Sent" onclick="submitCode('')" />
-
-                      </div>
-
-                    </div>
-                    <div id="voiceModalContent">
-                      <div><input type="text" id="voiceCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off" />
-                        <input id="voiceRequest" class="button button-primary button-wide email-button link-button" type="button" value="Re-Call" onclick="requestCode('call')" />
-
-                      </div>
-                      <div><input id="voiceSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('voiceCode').value)" />
-
-                      </div>
-
-                    </div>
-
-                  </div><br>
-                  <div class="auth-footer clearfix">
-                    <a href="{{okta_config.org_host}}" class="link " data-se="cutout-link"> Back to Sign In </a>
 
                   </div>
-                  <input type="hidden" id="oktaFactorType" name="oktaFactorType" />
+                  <div id="googleAuthModalContent">
+
+                    <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
+                      <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
+                        <input name="passCode" type="text" id="googleAuthCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off" />
+                      </span>
+
+                    </div>
+                    <div>
+
+                      <input id="googleAuthSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('googleAuthCode').value)" />
+
+                    </div>
+
+                  </div>
+                  <div id="oktaVerifyModalContent">
+                    <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
+                      <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
+                        <input type="text" name="passCode" id="oktaVerifyCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off" />
+                      </span>
+
+                    </div>
+                    <div>
+                      <input id="OktaVerifySubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('oktaVerifyCode').value)" />
+
+                    </div>
+
+                  </div>
+                  <div id="oktaVerifyPushModalContent">
+                    <div><input id="oktaVerifyPushSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Push Sent" onclick="submitCode('')" />
+
+                    </div>
+
+                  </div>
+                  <div id="voiceModalContent" >
+                    <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
+                      <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
+                        <input name="passCode" type="text" id="voiceCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off" />
+                      </span>
+                    </div><br>
+                    <div>
+                      <input id="voiceRequest" class="button button-primary button-wide email-button link-button" type="button" value="Re-Call" onclick="requestCode('call')" />
+
+                    </div><br>
+                    <div>
+                      <input id="voiceSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('voiceCode').value)" />
+
+                    </div>
+
+                  </div>
+
+                </div><br>
+                <div class="auth-footer clearfix">
+                  <a href="{{okta_config.org_host}}" class="link " data-se="cutout-link"> Back to Sign In </a>
 
                 </div>
+                <input type="hidden" id="oktaFactorType" name="oktaFactorType" />
 
             </div>
 
           </div>
-          </form>
 
         </div>
+        </form>
 
       </div>
 
     </div>
 
   </div>
+
+</div>
 
 </div>
 
