@@ -1,0 +1,4 @@
+flake8
+flask
+lxml
+requests>=2.18.4
