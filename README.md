@@ -72,7 +72,7 @@ The following steps are needed to run this example with your Okta Org (Tenant)
 Verify test users or selected users are set up and assigned to test MFA groups in Okta fo rtest
 
 ### Step 5: Edit config.py
-Set Okta org, API Token (the one saved from Step 1) and optionally set OIDC app settings from Okta if you would like to test authentication as well
+Set Okta org, API Token (the one saved from Step 1) 
 
 ### Step 6: Run the application
 After running the app, navigate to the landing page of the app (based on the app url you configured) then select "Forgot Password", then enter the email or user name you would like to try and reset in Okta.
