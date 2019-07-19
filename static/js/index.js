@@ -18,6 +18,7 @@ function setupUIControls () {
   $("#oktaVerifyModalContent").hide();
   $("#oktaVerifyPushModalContent").hide();
   $("#voiceModalContent").hide();
+  $("#questionModalContent").hide();
   $("#signin-container").show();
   //hide factors admin did not select
   if (!okta_factorOktaVerifyCode)
@@ -30,6 +31,8 @@ function setupUIControls () {
     $("#sms").hide();
   if (!okta_factorVoice)
     $("#voice").hide();
+  if (!okta_factorQuestion)
+      $("#question").hide();
 
   $("a.button").on("click", onButtonFactorClick);
 
@@ -61,6 +64,9 @@ function onButtonFactorClick(event) {
   $("#oktaVerifyModalContent").hide();
   $("#oktaVerifyPushModalContent").hide();
   $("#voiceModalContent").hide();
+  $("#questionModalContent").hide();
+
+
   if (button == "verify-code") {
     $("#oktaFactorType").val("token:software:totp");
     displayMFAOktaVerify();
@@ -84,6 +90,11 @@ function onButtonFactorClick(event) {
     requestCode("call");
     displayMFAVoice();
     $("#voiceCode").focus();
+  } else if (button == "question") {
+    $("#oktaFactorType").val("question");
+    requestCode("question");
+    displayMFAQuestion();
+    $("#answerCode").focus();
   }
 }
 
@@ -103,6 +114,11 @@ function displayMFAVoice() {
   console.log("displayMFAVoice()");
   $("#header-text").text("Enter Voice Call Code");
   $("#voiceModalContent").show();
+}
+function displayMFAQuestion() {
+  console.log("displayMFAQuestion()");
+  $("#header-text").text("Enter Answer To Question");
+  $("#questionModalContent").show();
 }
 
 function displayMFAOktaVerifyPush() {
@@ -132,6 +148,8 @@ function requestCode(factorType) {
     dataType: "json",
     success: function (responseData) {
       console.log(responseData);
+      console.log(responseData.factorQuestion);
+      $("#secretQuestion").text(responseData.factorQuestion);
     }
   });
 

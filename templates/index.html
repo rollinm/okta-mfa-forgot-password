@@ -13,6 +13,8 @@
       var okta_factorGoogleAuth = {{okta_config.factorGoogleAuth}};
       var okta_factorSMS = {{okta_config.factorSMS}};
       var okta_factorVoice = {{okta_config.factorVoice}};
+      var okta_factorQuestion = {{okta_config.factorQuestion}};
+
     </script>
     <link href="{{okta_config.org_host}}/assets/loginpage/css/okta-login-page.min.88c003cadf2616a8827c8a1531c3fea9.css" type="text/css" rel="stylesheet"/>
 
@@ -83,6 +85,7 @@
                           <a data-se="email-button" id="googleAuth" class="button button-primary button-wide email-button link-button" href="#">Reset via Google Authenticator</a>
                           <a data-se="sms-button" id="sms" class="button button-primary button-wide sms-button link-button" href="#">Reset via SMS</a>
                           <a data-se="email-button" id="voice" class="button button-primary button-wide email-button link-button" href="#">Reset via Voice</a>
+                            <a data-se="email-button" id="question" class="button button-primary button-wide email-button link-button" href="#">Reset via Security Question</a>
 
                         </div>
 
@@ -108,59 +111,72 @@
                           </div>
 
                         </div>
+                        <div id="googleAuthModalContent">
+
+                          <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
+                            <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
+                              <input name="passCode" type="text" id="googleAuthCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off"/>
+                            </span>
+
+                          </div>
+                          <div>
+
+                            <input id="googleAuthSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('googleAuthCode').value)"/>
+
+                          </div>
+
+                        </div>
+                        <div id="oktaVerifyModalContent">
+                          <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
+                            <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
+                              <input type="text" name="passCode" id="oktaVerifyCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off"/>
+                            </span>
+
+                          </div>
+                          <div>
+                            <input id="OktaVerifySubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('oktaVerifyCode').value)"/>
+
+                          </div>
+
+                        </div>
+                        <div id="oktaVerifyPushModalContent">
+                          <div><input id="oktaVerifyPushSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Push Sent" onclick="submitCode('')"/>
+
+                          </div>
+
+                        </div>
+                        <div id="voiceModalContent">
+                          <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
+                            <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
+                              <input name="passCode" type="text" id="voiceCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off"/>
+                            </span>
+                          </div><br>
+                          <div>
+                            <input id="voiceRequest" class="button button-primary button-wide email-button link-button" type="button" value="Re-Call" onclick="requestCode('call')"/>
+
+                          </div><br>
+                          <div>
+                            <input id="voiceSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('voiceCode').value)"/>
+
+                          </div>
+
+                        </div>
+                        <div id="questionModalContent">
+                          <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
+
+                              <div class="mobile-recovery-hint" id="secretQuestion"></div>
+
+                            <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
+                              <input name="answerCode" type="text" id="answerCode" placeholder="Enter Answer" aria-label="Enter Answer" autocomplete="off"/>
+                            </span>
+                          </div><br>
+                          <div>
+                            <input id="questionSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('answerCode').value)"/>
+                          </div>
+
+                        </div>
 
                       </div>
-                      <div id="googleAuthModalContent">
-
-                        <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
-                          <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
-                            <input name="passCode" type="text" id="googleAuthCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off"/>
-                          </span>
-
-                        </div>
-                        <div>
-
-                          <input id="googleAuthSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('googleAuthCode').value)"/>
-
-                        </div>
-
-                      </div>
-                      <div id="oktaVerifyModalContent">
-                        <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
-                          <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
-                            <input type="text" name="passCode" id="oktaVerifyCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off"/>
-                          </span>
-
-                        </div>
-                        <div>
-                          <input id="OktaVerifySubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('oktaVerifyCode').value)"/>
-
-                        </div>
-
-                      </div>
-                      <div id="oktaVerifyPushModalContent">
-                        <div><input id="oktaVerifyPushSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Push Sent" onclick="submitCode('')"/>
-
-                        </div>
-
-                      </div>
-                      <div id="voiceModalContent">
-                        <div class="o-form-fieldset o-form-label-top enroll-sms-phone o-form-input" style="width:100%">
-                          <span data-se="o-form-input-passCode" class="o-form-input-name-passCode o-form-control okta-form-input-field input-fix">
-                            <input name="passCode" type="text" id="voiceCode" placeholder="Enter Code" aria-label="Enter Code" autocomplete="off"/>
-                          </span>
-                        </div><br>
-                        <div>
-                          <input id="voiceRequest" class="button button-primary button-wide email-button link-button" type="button" value="Re-Call" onclick="requestCode('call')"/>
-
-                        </div><br>
-                        <div>
-                          <input id="voiceSubmit" class="button button-primary button-wide email-button link-button" type="button" value="Verify" onclick="submitCode(document.getElementById('voiceCode').value)"/>
-
-                        </div>
-
-                      </div>
-
                     </div><br>
                     <div class="auth-footer clearfix">
                       <a href="{{okta_config.org_host}}" class="link " data-se="cutout-link">
@@ -199,36 +215,7 @@
 
   });
 
-  function setupUIControls () {
-    //hide the step 2 items for factors
-    $("#username-error").hide();
-    $("#code-error-box").hide();
-    $("#smsModalContent").hide();
-    $("#googleAuthModalContent").hide();
-    $("#oktaVerifyModalContent").hide();
-    $("#oktaVerifyPushModalContent").hide();
-    $("#voiceModalContent").hide();
-    $("#signin-container").show();
-    //hide factors admin did not select
-    if (!okta_factorOktaVerifyCode)
-      $("#verify-code").hide();
-    if (!okta_factorOktaVerifyPush)
-      $("#verify-push").hide();
-    if (!okta_factorGoogleAuth)
-      $("#googleAuth").hide();
-    if (!okta_factorSMS)
-      $("#sms").hide();
-    if (!okta_factorVoice)
-      $("#voice").hide();
 
-    $("a.button").on("click", onButtonFactorClick);
-
-  }
-
-  function setBackgroundImage() {
-    applyStyle('login-bg-image', "background-image: url("+okta_background+")");
-    applyStyle('login-bg-image-ie8', "filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="+okta_background+", sizingMethod='scale')");
-  }
   //]]>
 </script>
 

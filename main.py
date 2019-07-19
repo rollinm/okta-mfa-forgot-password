@@ -280,7 +280,7 @@ def oidc():
 
     return response
 
-
+#this is the push case route .. person presses a button to start an mfa process that requires a 2 step process
 @app.route('/push_mfa_code', methods=["POST"])
 def push_mfa_code():
     print "push_mfa_code()"
@@ -288,6 +288,8 @@ def push_mfa_code():
     print "request_json: {0}".format(request_json)
     print "config {0}".format(config.okta)
     print "request {0}".format(request.headers)
+    print "factor_type: {0}".format(request_json["factorType"])
+
     okta_util = OktaUtil(request.headers, config.okta)
 
     username = request_json["username"]
@@ -312,11 +314,16 @@ def push_mfa_code():
             #print "factor: {0}".format(json.dumps(factor, indent=4, sort_keys=True))
             if (factor["factorType"] == factor_type and factor["provider"] == "OKTA") or (factor["provider"] == factor_type):
                 okta_factor_id = factor["id"]
+                if factor_type == "question":
+                    print "question is {0}".format(factor["profile"]["questionText"])
+                    response["factorQuestion"] = factor["profile"]["questionText"]
 
         print "okta_factor_id: {0}".format(okta_factor_id)
 
+
+
         if okta_factor_id:
-            push_response = okta_util.push_factor_verification(okta_user_id, okta_factor_id, code)
+            push_response = okta_util.push_factor_verification(okta_user_id, okta_factor_id, factor_type, code)
             # print "push_response: {0}".format(json.dumps(push_response, indent=4, sort_keys=True))
 
             # Check for a valid factor result

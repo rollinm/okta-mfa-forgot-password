@@ -109,11 +109,13 @@ class OktaUtil:
         body = {}
         return self.execute_get(url, body)
 
-    def push_factor_verification(self, user_id, factor_id, passCode=None):
+    def push_factor_verification(self, user_id, factor_id, factorType, passCode=None):
         url = "{host}/api/v1/users/{user_id}/factors/{factor_id}/verify".format(host=self.REST_HOST, user_id=user_id, factor_id=factor_id)
         body = {}
+        if passCode and factorType == "question":
+            body["answer"] = passCode
 
-        if passCode:
+        if passCode and factorType !="question":
             body["passCode"] = passCode
 
         return self.execute_post(url, body)
